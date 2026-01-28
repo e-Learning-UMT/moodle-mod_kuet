@@ -1,0 +1,128 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+    Project implemented by the "Recovery, Transformation and Resilience Plan.
+    Funded by the European Union - Next GenerationEU".
+    Produced by the UNIMOODLE University Group: Universities of
+    Valladolid, Complutense de Madrid, UPV/EHU, León, Salamanca,
+    Illes Balears, Valencia, Rey Juan Carlos, La Laguna, Zaragoza, Málaga,
+    Córdoba, Extremadura, Vigo, Las Palmas de Gran Canaria y Burgos
+}}
+{{!
+    @template mod_kuet/teacher_ranking
+
+    Teacher ranking
+
+    Classes required for JS:
+    * None
+
+    Data attibutes required for JS:
+    * None
+
+    Context variables required for this template:
+    * none
+
+    Example context (json):
+    {
+    }
+}}
+<div class="ranking-list">
+    <h6 class="titlecontainer bg-primary">
+        {{#pix}} i/vote, mod_kuet {{/pix}}
+        {{#str}}ranking, mod_kuet{{/str}}
+    </h6>
+    <div class="ranking-users" data-region="ranking-users">
+        <div class="ranking-users-body d-table list-group" data-region="ranking_users">
+            <div class="d-table-row ranking-users-thead">
+                <div class="d-table-cell">{{#str}}question_position, mod_kuet{{/str}}</div>
+                <div class="d-table-cell">{{#str}}participant, mod_kuet{{/str}}</div>
+                <div class="d-table-cell text-center">{{#str}}score, mod_kuet{{/str}}</div>
+                <div class="d-table-cell text-center">{{#str}}success, mod_kuet{{/str}}</div>
+                <div class="d-table-cell text-center">{{#str}}incorrect, mod_kuet{{/str}}</div>
+                <div class="d-table-cell text-center">{{#str}}partially_correct, mod_kuet{{/str}}</div>
+                <div class="d-table-cell text-center">{{#str}}noresponse, mod_kuet{{/str}}</div>
+                <div class="d-table-cell text-center"></div>
+            </div>
+            {{#rankingusers}}
+                <div class="2 d-table-row ranking-users-data user-item" data-userid="{{userid}}">
+                    <div class="d-table-cell">{{userposition}}º</div>
+                    <div class="d-table-cell">
+                        <div class="participant" data-userid="{{userid}}">
+                            <a href="{{userprofileurl}}" target="_blank">
+                                {{#userimage}}
+                                    <img src="{{userimage}}" alt="{{userfullname}}">
+                                {{/userimage}}
+                                <span class="user-fullname">
+                                    {{userfullname}}
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="d-table-cell text-center">{{userpoints}}</div>
+                    <div class="d-table-cell text-center">{{correctanswers}}</div>
+                    <div class="d-table-cell text-center">{{incorrectanswers}}</div>
+                    <div class="d-table-cell text-center">{{partially}}</div>
+                    <div class="d-table-cell text-center">{{notanswers}}</div>
+                    <div class="d-table-cell text-center viewreport">
+                        {{#viewreporturl}}
+                            <a href="{{viewreporturl}}">
+                                + <span>{{#str}}viewreport_user, mod_kuet{{/str}}</span>
+                            </a>
+                        {{/viewreporturl}}
+
+                    </div>
+                </div>
+            {{/rankingusers}}
+
+            {{#rankinggroups}}
+                <div class="d-table-row ranking-users-data user-item" data-userid="{{groupid}}">
+                    <div class="d-table-cell">{{groupposition}}º</div>
+                    <div class="d-table-cell">
+                        <div class="participant" data-userid="{{groupid}}">
+                            <a href="{{groupurl}}" target="_blank">
+                                {{#groupimage}}
+                                    <img src="{{groupimage}}" alt="{{name}}">
+                                {{/groupimage}}
+                                <span class="user-fullname">
+                                    {{groupname}}
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="d-table-cell text-center">{{grouppoints}}</div>
+                    <div class="d-table-cell text-center">{{correctanswers}}</div>
+                    <div class="d-table-cell text-center">{{incorrectanswers}}</div>
+                    <div class="d-table-cell text-center">{{partially}}</div>
+                    <div class="d-table-cell text-center">{{notanswers}}</div>
+                    <div class="d-table-cell text-center viewreport">
+                        {{#viewreporturl}}
+                            <a href="{{viewreporturl}}">
+                                + <span>{{#str}}viewreport_group, mod_kuet{{/str}}</span>
+                            </a>
+                        {{/viewreporturl}}
+                    </div>
+                </div>
+            {{/rankinggroups}}
+        </div>
+    </div>
+
+</div>
+
+<div class="download-report" data-region="download-report">
+    <div class="row">
+        {{{downloadsessionrankingreport}}}
+    </div>
+</div>

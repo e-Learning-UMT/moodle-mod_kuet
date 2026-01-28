@@ -1,0 +1,139 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+    Project implemented by the "Recovery, Transformation and Resilience Plan.
+    Funded by the European Union - Next GenerationEU".
+    Produced by the UNIMOODLE University Group: Universities of
+    Valladolid, Complutense de Madrid, UPV/EHU, León, Salamanca,
+    Illes Balears, Valencia, Rey Juan Carlos, La Laguna, Zaragoza, Málaga,
+    Córdoba, Extremadura, Vigo, Las Palmas de Gran Canaria y Burgos
+}}
+{{!
+    @template mod_kuet/encasement
+
+    Encasement
+
+    Classes required for JS:
+    * None
+
+    Data attibutes required for JS:
+    * None
+
+    Context variables required for this template:
+    * none
+
+    Example context (json):
+    {
+    }
+}}
+<div class="container-fluid question-content" data-kid="{{kid}}" data-questionid="{{questionid}}" data-sid="{{sessionid}}" data-cmid="{{cmid}}" data-kuetid="{{kuetid}}" data-region="question-content">
+    <div class="row">
+        <div class="col-12 question-container">
+            {{^endsession}}
+                <div class="question-heading bg-primary {{#improvied}}d-none{{/improvied}}">
+                    <span class="session-index">
+                        <span class="question-text">{{#str}}question, mod_kuet{{/str}}</span> {{ question_index_string }}
+                    </span>
+                    <div class="content-progress">
+                        <div class="progress session-progress">
+                            <div class="progress-bar" role="progressbar" style="width: {{sessionprogress}}%" aria-valuenow="{{sessionprogress}}" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                    <div class="question-fullscreen" data-action="question-fullscreen">
+                        {{#pix}}q/zoomin, mod_kuet{{/pix}}
+                    </div>
+                    <div class="question-fullscreen" data-action="question-exit-fullscreen">
+                        {{#pix}}q/zoomout, mod_kuet{{/pix}}
+                    </div>
+                </div>
+                <div class="question-body container-fluid">
+                    {{#multichoice}}
+                        {{> mod_kuet/questions/multichoice }}
+                    {{/multichoice}}
+
+                    {{#truefalse}}
+                        {{> mod_kuet/questions/truefalse }}
+                    {{/truefalse}}
+
+                    {{#match}}
+                        {{> mod_kuet/questions/match }}
+                    {{/match}}
+
+                    {{#shortanswer}}
+                        {{> mod_kuet/questions/shortanswer }}
+                    {{/shortanswer}}
+
+                    {{#numerical}}
+                        {{> mod_kuet/questions/numerical }}
+                    {{/numerical}}
+
+                    {{#calculated}}
+                        {{> mod_kuet/questions/calculated }}
+                    {{/calculated}}
+
+                    {{#description}}
+                        {{> mod_kuet/questions/description }}
+                    {{/description}}
+
+                    {{#ddwtos}}
+                        {{> mod_kuet/questions/ddwtos }}
+                    {{/ddwtos}}
+
+                    {{#cloudtags}}
+                        {{> mod_kuet/questions/cloudtags }}
+                    {{/cloudtags}}
+
+                    <!-- only for teachers -->
+                    {{#raceresults}}
+                        {{> mod_kuet/session/raceresults }}
+                    {{/raceresults}}
+
+                    {{#isteacher}}
+                        {{> mod_kuet/session/manual/teachercontrolpanel }}
+                    {{/isteacher}}
+                </div>
+                {{#description}}
+                    {{#programmedmode}}
+                        {{^preview}}
+                            <div class="btn btn-primary m-3 float-right" data-action="next-question" data-questionid="{{questionid}}" data-kid="{{kid}}">
+                                {{#str}}next{{/str}}
+                            </div>
+                        {{/preview}}
+                    {{/programmedmode}}
+                {{/description}}
+                {{#programmedmode}}
+                    {{^preview}}
+                        {{^description}}
+                            <div class="btn btn-primary m-3 float-right d-none" data-action="next-question" data-questionid="{{questionid}}" data-kid="{{kid}}">
+                                {{#str}}next{{/str}}
+                            </div>
+                        {{/description}}
+                    {{/preview}}
+                {{/programmedmode}}
+            {{/endsession}}
+            {{#endsession}}
+                {{> mod_kuet/session/endsession }}
+            {{/endsession}}
+        </div>
+    </div>
+</div>
+{{^endsession}}
+    {{#js}}
+        require(['mod_kuet/question'], function(Question) {
+            Question.initQuestion('[data-region="question-content"]');
+        });
+    {{/js}}
+{{/endsession}}

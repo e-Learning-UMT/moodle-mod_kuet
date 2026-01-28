@@ -1,0 +1,101 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+    Project implemented by the "Recovery, Transformation and Resilience Plan.
+    Funded by the European Union - Next GenerationEU".
+    Produced by the UNIMOODLE University Group: Universities of
+    Valladolid, Complutense de Madrid, UPV/EHU, León, Salamanca,
+    Illes Balears, Valencia, Rey Juan Carlos, La Laguna, Zaragoza, Málaga,
+    Córdoba, Extremadura, Vigo, Las Palmas de Gran Canaria y Burgos
+}}
+{{!
+    @template mod_kuet/studentcanvas
+
+    Student canvas
+
+    Classes required for JS:
+    * None
+
+    Data attibutes required for JS:
+    * None
+
+    Context variables required for this template:
+    * none
+
+    Example context (json):
+    {
+    }
+}}
+<div
+    data-region="student-canvas"
+    data-userid="{{userid}}"
+    data-username="{{userfullname}}"
+    data-cmid="{{cmid}}"
+    data-sid="{{sid}}"
+    data-userimage="{{userimage}}"
+    data-kuetid="{{kuetid}}"
+    data-groupmode="{{isgroupmode}}"
+    data-groupid="{{groupid}}"
+    data-groupimage="{{groupimage}}"
+    data-groupname="{{groupname}}"
+>
+    <div class="row content-header">
+        <div class="more-info-session col-12">
+            <div class="sessionname">
+                {{#pix}}s/name, mod_kuet{{/pix}}
+                <div class="sessionname-text">
+                    {{#str}}session_name_placeholder, mod_kuet{{/str}}
+                    <span>{{sessionname}}</span>
+                </div>
+            </div>
+            <div class="numusers">
+                {{#pix}}s/users, mod_kuet{{/pix}}
+                <div class="countusers">
+                    <span id="countusers">0</span>
+                    <span class="participants">{{#str}}participants, mod_kuet{{/str}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{#waitingroom}}
+        {{> mod_kuet/session/manual/waitingroom/student }}
+    {{/waitingroom}}
+
+    <div id="message-box"></div>
+    <div id="student_messages"></div>
+</div>
+<div class="d-none student-improvising" data-region="student-improvise">
+    <div class="improvising-image">
+        {{#pix}}f/not_session, mod_kuet{{/pix}}
+    </div>
+    <div class="improvising-text">
+        <h2>{{#str}}waitteacher, mod_kuet{{/str}}</h2>
+        <p>{{#str}}teacherimprovising, mod_kuet{{/str}}</p>
+    </div>
+</div>
+
+{{#js}}
+    require(['mod_kuet/studentsockets'], function(Sockets) {
+        Sockets.studentInitSockets('[data-region="student-canvas"]', '{{socketurl}}', {{port}});
+        /*window.onbeforeunload = function(e) {
+            // 3IP review.
+            e.returnValue = confirm(
+                'Si sale de esta página se cerrará la conexión y perderá el' +
+                ' progreso si no ha finalizado. ¿Desea salir?'
+            );
+        };*/
+    });
+{{/js}}

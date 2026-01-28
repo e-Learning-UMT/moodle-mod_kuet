@@ -1,0 +1,345 @@
+body#page-mod-kuet-view {
+    #page-wrapper {
+        #page-content {
+            #region-main {
+                [role="main"] {
+                    .imageQr {
+                        .item {
+                            a {
+                                img, svg, g {
+                                    width: 60px !important;
+                                    height: 60px !important;
+                                    position: absolute;
+                                    top: 0;
+                                    right: 0;
+                                }
+                            }
+                        }
+                    }
+
+                    .lightbox {
+                        background: rgba(0, 0, 0, 0.8);
+                        display: none;
+                        position: fixed;
+                        z-index: 1000;
+                    }
+
+                    .lightbox:target {
+                        align-items: center;
+                        bottom: 0;
+                        display: flex;
+                        justify-content: center;
+                        left: 0;
+                        right: 0;
+                        top: 0;
+                    }
+
+                    .lightbox img,
+                    .lightbox svg {
+                        border-radius: 1em;
+                        display: block;
+                        margin: auto;
+                        max-width: 100%;
+                    }
+
+                    .lightbox .close {
+                        color: #fff;
+                        font-size: 4em;
+                        font-weight: bold;
+                        height: 1em;
+                        position: fixed;
+                        right: 1em;
+                        top: 1.5em;
+                        width: 1em;
+                        z-index: 1001;
+                    }
+
+                    .lightbox .content {
+                        padding: 20px;
+                        background-color: white
+                    }
+
+                    .lightbox p {
+                        font-size: 2em;
+                        font-weight: bold;
+                        text-align: center;
+                    }
+
+                    .mobile-create-session {
+                        display: none;
+                    }
+
+                    .sessions-list {
+                        margin-top: 25px;
+                        padding: 0;
+                        border-radius: 8px;
+                        box-shadow: 0 0 10px rgba(0, 0, 0, 0.06);
+                        background-color: white;
+
+                        .content_table {
+                            width: 100%;
+                            overflow: auto;
+
+                            &::-webkit-scrollbar {
+                                width: 8px;
+                                height: 8px;
+                            }
+
+                            &::-webkit-scrollbar-track {
+                                background: #e0e0e0;
+                            }
+
+                            &::-webkit-scrollbar-thumb {
+                                background-color: #6a737b;
+                                border-radius: 4px;
+                            }
+                            scrollbar-width: thin;
+                            scrollbar-color: #6a737b #e0e0e0;
+                        }
+
+                        .sessions-list-header {
+                            padding: 15px 20px;
+                            display: flex;
+                            flex-flow: row nowrap;
+                            justify-content: space-between;
+                            align-items: center;
+                            border-radius: 8px 8px 0 0;
+                            max-height: 60px;
+
+                            .sessions-list-header-title {
+                                display: flex;
+                                flex-flow: row nowrap;
+                                justify-content: flex-start;
+                                align-items: center;
+                                color: white;
+
+                                h6 {
+                                    margin-bottom: 0;
+                                }
+                            }
+
+                            .create-session {
+                                background-color: white;
+
+                            }
+                        }
+
+                        .sessions-list-body {
+                            width: 100%;
+
+                            .sessions-list-thead {
+                                font-weight: bold;
+
+                                .d-table-cell {
+                                    color: #2b2b2b !important;
+                                }
+                            }
+
+                            .sessions-list-data {
+                                font-weight: normal;
+
+                                &:nth-child(even) {
+                                    background-color: rgba(0, 0, 0, .03);
+                                }
+
+                                &.session-started {
+                                    background-color: #d7e4d6;
+                                    color: #1c3f1a;
+                                }
+
+                                &.session-warning {
+                                    background-color: #fcefdc;
+                                    color: #7d5a29;
+                                }
+
+                                &.session-conflict,
+                                &.session-error {
+                                    background-color: #f4d6d2;
+                                    color: #691911;
+                                }
+
+                                &.session-creating {
+                                    background-color: #d1ecf1;
+                                    color: #0c5460;
+                                }
+
+                                &.session-noquestions {
+                                    background-color: #d6d8d9;
+                                    color: #1b1e21;
+                                }
+
+                                .d-table-cell {
+                                    border-top: 1px solid #edebf4;
+                                    color: #929292 !important;
+                                }
+                            }
+
+                            .d-table-cell {
+                                padding: 15px;
+
+                                &.actions {
+                                    .content-actions {
+                                        display: flex;
+                                        flex-flow: row nowrap;
+                                        justify-content: center;
+                                        align-items: center;
+
+                                        .session-action {
+                                            background-color: transparent;
+                                            height: 32px;
+                                            width: 32px;
+                                            border-radius: 8px;
+                                            display: flex;
+                                            justify-content: center;
+                                            align-items: center;
+                                            margin: 0 7px;
+                                            transition: background-color .2s ease-in-out;
+
+                                            .icon {
+                                                margin: 0 !important;
+                                            }
+
+                                            &:hover {
+                                                cursor: pointer;
+                                                background-color: #e6e6e6;
+                                                transition: background-color .2s ease-in-out;
+                                            }
+
+                                            &:focus {
+                                                background-color: transparent !important;
+                                            }
+                                        }
+                                    }
+
+                                    .mobile-content-actions {
+                                        display: none;
+                                    }
+                                }
+
+                                &.initsession,
+                                &.viewreport-session {
+                                    div, a {
+                                        width: 125px;
+                                        height: 32px;
+                                        color: #344054;
+                                        background-color: transparent;
+                                        border-radius: 8px;
+                                        display: flex;
+                                        justify-content: center;
+                                        align-items: center;
+                                        margin: 0 auto;
+                                        transition: background-color .2s ease-in-out, color .2s ease-in-out;
+
+                                        &:hover {
+                                            cursor: pointer;
+                                            text-decoration: none;
+                                            background-color: #e6e6e6;
+                                            transition: background-color .2s ease-in-out, color .2s ease-in-out;
+                                            color: #475467;
+                                        }
+
+                                        &:focus {
+                                            background-color: transparent !important;
+                                        }
+                                    }
+
+                                    .icon-warning {
+                                        display: block;
+                                        text-align: center;
+
+                                        img {
+                                            height: 28px;
+                                            width: auto;
+                                            margin: 0;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 991px) {
+    body#page-mod-kuet-view {
+        #page-wrapper {
+            #page-content {
+                #region-main {
+                    [role="main"] {
+                        .container-fluid {
+                            .mobile-create-session {
+                                display: flex;
+                                flex-flow: row nowrap;
+                                justify-content: center;
+                                align-items: center;
+                                margin-top: 10px;
+                                width: 100%;
+                                color: #5a57ff;
+                                border-radius: 8px;
+                                border: 1px solid #5a57ff;
+                                background-color: transparent;
+                                height: 50px;
+
+                                &:hover {
+                                    color: #5a57ff;
+                                    border: 1px solid #5a57ff;
+                                    background-color: transparent;
+                                }
+                            }
+
+                            .sessions-list {
+                                .sessions-list-header {
+                                    .create-session {
+                                        display: none;
+                                    }
+                                }
+
+                                .sessions-list-body {
+                                    .d-table-cell {
+                                        text-align: center;
+
+                                        &.actions {
+                                            .content-actions {
+                                                display: none;
+                                            }
+
+                                            .mobile-content-actions {
+                                                display: block;
+
+                                                .dropdown-toggle {
+                                                    &:after {
+                                                        display: none;
+                                                    }
+
+                                                    .icon {
+                                                        height: 22px;
+                                                        width: auto;
+                                                        margin: 0;
+                                                    }
+                                                }
+                                            }
+                                        }
+
+                                        &.initsession,
+                                        &.viewreport-session {
+                                            a {
+                                                width: 30px;
+
+                                                span {
+                                                    display: none;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

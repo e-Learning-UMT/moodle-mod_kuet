@@ -1,0 +1,187 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+    Project implemented by the "Recovery, Transformation and Resilience Plan.
+    Funded by the European Union - Next GenerationEU".
+    Produced by the UNIMOODLE University Group: Universities of
+    Valladolid, Complutense de Madrid, UPV/EHU, León, Salamanca,
+    Illes Balears, Valencia, Rey Juan Carlos, La Laguna, Zaragoza, Málaga,
+    Córdoba, Extremadura, Vigo, Las Palmas de Gran Canaria y Burgos
+}}
+{{!
+    @template mod_kuet/teachercontrolpanel
+
+    Teacher Control Panel
+
+    Classes required for JS:
+    * None
+
+    Data attibutes required for JS:
+    * None
+
+    Context variables required for this template:
+    * none
+
+    Example context (json):
+    {
+    }
+}}
+<div class="content-control-panel">
+    <div class="collapse show width" id="control-panel">
+        <div class="teacher-control-panel" data-region="teacher_control_panel">
+            <h5>{{#str}}controlpanel, mod_kuet{{/str}}</h5>
+            <div class="separator">
+                <span>{{#str}}control, mod_kuet{{/str}}</span>
+                <div class="line-separator"></div>
+            </div>
+            <div class="control-action {{^ranking}}{{^cloudtags}}d-none{{/cloudtags}}{{/ranking}}" data-action="next">
+                <div class="control-action-icon bg-primary">
+                    {{#pix}}i/next, mod_kuet{{/pix}}
+                </div>
+                <span>{{#str}}next, mod_kuet{{/str}}</span>
+            </div>
+            {{^ranking}}
+                {{^cloudtags}}
+                    <div class="control-action" data-action="finishquestion">
+                        <div class="control-action-icon bg-primary">
+                            {{#pix}}i/close, mod_kuet{{/pix}}
+                        </div>
+                        <span>{{#str}}finishquestion, mod_kuet{{/str}}</span>
+                    </div>
+                    <div class="control-action" data-action="pause">
+                        <div class="control-action-icon bg-primary">
+                            {{#pix}}i/pause, mod_kuet{{/pix}}
+                        </div>
+                        <span>{{#str}}pause, mod_kuet{{/str}}</span>
+                    </div>
+                    <div class="control-action d-none" data-action="play">
+                        <div class="control-action-icon bg-primary">
+                            {{#pix}}i/play, mod_kuet{{/pix}}
+                        </div>
+                        <span>{{#str}}play, mod_kuet{{/str}}</span>
+                    </div>
+                {{/cloudtags}}
+            {{/ranking}}
+
+            <div class="control-action {{#cloudtags}}disabled{{/cloudtags}} {{#ranking}}disabled{{/ranking}}" data-action="resend">
+                <div class="control-action-icon bg-primary">
+                    {{#pix}}i/resend, mod_kuet{{/pix}}
+                </div>
+                <span>{{#str}}resend, mod_kuet{{/str}}</span>
+            </div>
+            <div class="dropdown show {{#cloudtags}}disabled{{/cloudtags}}">
+                <div class="control-action dropdown-toggle" role="button" id="jumpTo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <div class="control-action-icon bg-primary">
+                        {{#pix}}i/jump, mod_kuet{{/pix}}
+                    </div>
+                    <span>{{#str}}jump, mod_kuet{{/str}}</span>
+                </div>
+                <div class="dropdown-menu" aria-labelledby="jumpTo">
+                    <div class="form-inline">
+                        <div class="form-group ml-2 mr-2 mb-2">
+                            <label for="jumpToNumber" class="sr-only">{{#str}}question_number, mod_kuet{{/str}}</label>
+                            <input type="number" class="form-control" id="jumpToNumber" data-input="jumpto" data-numquestions="{{numquestions}}" placeholder="{{#str}}question_number, mod_kuet{{/str}}" min="1" max="{{numquestions}}">
+                        </div>
+                        <div data-action="jump" class="btn btn-primary mb-2 mr-2">{{#str}}jump, mod_kuet{{/str}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="separator">
+                <span>{{#str}}showhide, mod_kuet{{/str}}</span>
+                <div class="line-separator"></div>
+            </div>
+            <div class="showhide-action disabled" data-action="answers">
+                <div class="d-flex align-items-center">
+                    <div class="showhide-action-icon">
+                        {{#pix}}i/eye, mod_kuet{{/pix}}
+                    </div>
+                    <span>{{#str}}responses, mod_kuet{{/str}}</span>
+                </div>
+                <div class="custom-control custom-switch">
+                    <input id="showhide_responses" type="checkbox"
+                           data-action="showhide_responses"
+                           class="custom-control-input"
+                    >
+                    <label for="showhide_responses" class="custom-control-label"
+                           title="{{#str}}responses, mod_kuet{{/str}}" >
+                    </label>
+                </div>
+            </div>
+            <div class="showhide-action disabled" data-action="statistics">
+                <div class="d-flex align-items-center">
+                    <div class="showhide-action-icon">
+                        {{#pix}}i/statistics, mod_kuet{{/pix}}
+                    </div>
+                    <span>{{#str}}statistics, mod_kuet{{/str}}</span>
+                </div>
+                <div class="custom-control custom-switch">
+                    <input id="showhide_statistics" type="checkbox"
+                           data-action="showhide_statistics"
+                           class="custom-control-input">
+                    <label for="showhide_statistics" class="custom-control-label"
+                           title="{{#str}}statistics, mod_kuet{{/str}}" >
+                    </label>
+                </div>
+            </div>
+            <div class="showhide-action disabled" data-action="feedback">
+                <div class="d-flex align-items-center">
+                    <div class="showhide-action-icon">
+                        {{#pix}}i/feedback, mod_kuet{{/pix}}
+                    </div>
+                    <span>{{#str}}feedback, mod_kuet{{/str}}</span>
+                </div>
+                <div class="custom-control custom-switch">
+                    <input id="showhide_feedback" type="checkbox"
+                           data-action="showhide_feedback"
+                           class="custom-control-input"
+                    >
+                    <label for="showhide_feedback" class="custom-control-label"
+                           title="{{#str}}feedback, mod_kuet{{/str}}" >
+                    </label>
+                </div>
+            </div>
+            <div class="separator">
+                <span>{{#str}}improvise_cloudtags, mod_kuet{{/str}}</span>
+                <div class="line-separator"></div>
+            </div>
+            <div class="special-action control-action {{^ranking}}disabled{{/ranking}} improvise-question" data-action="improvise">
+                <div class="control-action-icon bg-primary">
+                    {{#pix}}i/improvise, mod_kuet{{/pix}}
+                </div>
+                <span>{{#str}}improvise, mod_kuet{{/str}}</span>
+            </div>
+            <div class="special-action control-action disabled vote-question" data-action="vote">
+                <div class="control-action-icon bg-primary">
+                    {{#pix}}i/vote, mod_kuet{{/pix}}
+                </div>
+                <span>{{#str}}vote_tags, mod_kuet{{/str}}</span>
+            </div>
+
+            <div class="btn btn-primary endsession" data-action="endsession">
+                {{#str}}end, mod_kuet{{/str}}
+            </div>
+        </div>
+    </div>
+    <button role="button" class="btn teacher-control-panel-collapse" data-toggle="collapse" data-target="#control-panel">
+        {{#pix}}i/collapse, mod_kuet{{/pix}}
+    </button>
+</div>
+
+{{#js}}
+    require(['mod_kuet/teachercontrolpanel'], function(ControlPanel) {
+        ControlPanel.teacherControlPanel('[data-region="teacher_control_panel"]', {{kid}});
+    });
+{{/js}}

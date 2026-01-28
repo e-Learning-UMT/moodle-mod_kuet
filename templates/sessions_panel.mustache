@@ -1,0 +1,263 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+    Project implemented by the "Recovery, Transformation and Resilience Plan.
+    Funded by the European Union - Next GenerationEU".
+    Produced by the UNIMOODLE University Group: Universities of
+    Valladolid, Complutense de Madrid, UPV/EHU, León, Salamanca,
+    Illes Balears, Valencia, Rey Juan Carlos, La Laguna, Zaragoza, Málaga,
+    Córdoba, Extremadura, Vigo, Las Palmas de Gran Canaria y Burgos
+}}
+{{!
+    @template mod_kuet/sessions_panel
+
+    Sessions panel
+
+    Classes required for JS:
+    * None
+
+    Data attibutes required for JS:
+    * None
+
+    Context variables required for this template:
+    * none
+
+    Example context (json):
+    {
+    }
+}}
+<div data-region="sessions-panel" data-courseid="{{courseid}}" data-cmid="{{cmid}}">
+    <div class="position-relative">
+        <h2>{{#str}}sessions, mod_kuet{{/str}}</h2>
+        <small>{{#str}}sessions_info, mod_kuet{{/str}}</small>
+        <a class="mobile-create-session" href="{{createsessionurl}}">
+            + {{#str}}create_session, mod_kuet{{/str}}
+        </a>
+        {{#hasqrcodeimage}}
+            <div class="imageQr">
+                <div class="item">
+                    <a href="#imageQr">
+                        <img src="{{{urlqrcode}}}" />
+                    </a>
+                </div>
+            </div>
+            <div class="lightboxes">
+                <div class="lightbox" id="imageQr">
+                    <a href="#" class="close">&times;</a>
+                    <div class="content">
+                        <img src="{{{urlqrcode}}}" />
+                    </div>
+                </div>
+            </div>
+        {{/hasqrcodeimage}}
+    </div>
+    <div class="row">
+        <div class="col-12 active-sessions sessions-list">
+            <div class="sessions-list-header bg-primary">
+                <div class="sessions-list-header-title">
+                    {{#pix}} i/sessions_list, mod_kuet {{/pix}}
+                    <h6>{{#str}}active_sessions, mod_kuet{{/str}}</h6>
+                </div>
+                <a class="btn btn-secondary create-session text-primary border-0" href="{{createsessionurl}}">
+                    {{#str}}create_session, mod_kuet{{/str}}
+                </a>
+            </div>
+            <div class="content_table">
+                <div class="sessions-list-body d-table">
+                    <div class="d-table-row sessions-list-thead">
+                        <div class="d-table-cell">{{#str}}session_name, mod_kuet{{/str}}</div>
+                        <div class="d-table-cell">{{#str}}sessionmode, mod_kuet{{/str}}</div>
+                        <div class="d-table-cell">{{#str}}timemode, mod_kuet{{/str}}</div>
+                        <div class="d-table-cell text-center">{{#str}}sessiontime, mod_kuet{{/str}}</div>
+                        <div class="d-table-cell text-center">{{#str}}timeperquestion, mod_kuet{{/str}}</div>
+                        <div class="d-table-cell text-center">{{#str}}questions_number, mod_kuet{{/str}}</div>
+                        <div class="d-table-cell text-center">{{#str}}session_date, mod_kuet{{/str}}</div>
+                        <div class="d-table-cell text-center">{{#str}}session_actions, mod_kuet{{/str}}</div>
+                        <div class="d-table-cell"></div>
+                    </div>
+                    {{#activesessions}}
+                        <div class="d-table-row sessions-list-data {{#hasconflict}}session-conflict{{/hasconflict}} {{#haswarning}}session-warning{{/haswarning}} {{#issessionstarted}}session-started{{/issessionstarted}} {{#sessioncreating}}session-creating{{/sessioncreating}} {{#noquestions}}session-noquestions{{/noquestions}} {{#haserror}}session-error{{/haserror}}">
+                            <div class="d-table-cell">{{name}}</div>
+                            <div class="d-table-cell">{{sessionmode}}</div>
+                            <div class="d-table-cell">{{timemode}}</div>
+                            <div class="d-table-cell text-center">{{sessiontime}}</div>
+                            <div class="d-table-cell text-center">{{timeperquestion}}</div>
+                            <div class="d-table-cell text-center">{{questions_number}}</div>
+                            <div class="d-table-cell text-center">{{date}}</div>
+                            <div class="d-table-cell actions">
+                                {{#managesessions}}
+                                    <div class="content-actions">
+                                        {{^haserror}}
+                                            <a class="session-action {{#issessionstarted}}disabled{{/issessionstarted}}" href="{{editsessionurl}}">
+                                                {{#pix}} i/edit_session, mod_kuet, {{#str}}edit_session, mod_kuet{{/str}} {{/pix}}
+                                            </a>
+                                        {{/haserror}}
+                                        <div class="session-action" data-action="copy_session" data-sessionid="{{sessionid}}">
+                                            {{#pix}} i/copy_session, mod_kuet, {{#str}}copy_session, mod_kuet{{/str}} {{/pix}}
+                                        </div>
+                                        <div class="session-action {{#issessionstarted}}disabled{{/issessionstarted}}"
+                                             {{^issessionstarted}}data-action="delete_session"{{/issessionstarted}}
+                                             data-sessionid="{{sessionid}}">
+                                            {{#pix}} i/delete_session, mod_kuet, {{#str}}delete_session, mod_kuet{{/str}} {{/pix}}
+                                        </div>
+                                    </div>
+                                    <div class="dropdown show mobile-content-actions">
+                                        <a class="dropdown-toggle" href="#" role="button" id="actions-{{sessionid}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            {{#pix}}i/three_dots, mod_kuet {{/pix}}
+                                        </a>
+                                        <div class="dropdown-menu" aria-labelledby="actions-{{sessionid}}">
+                                            {{^haserror}}
+                                                <a class="dropdown-item {{#issessionstarted}}disabled{{/issessionstarted}}" href="{{editsessionurl}}">
+                                                    {{#str}}edit_session, mod_kuet{{/str}}
+                                                </a>
+                                            {{/haserror}}
+                                            <a class="dropdown-item" href="#" data-action="copy_session" data-sessionid="{{sessionid}}">
+                                                {{#str}}copy_session, mod_kuet{{/str}}
+                                            </a>
+                                            <a class="dropdown-item" {{#issessionstarted}}disabled{{/issessionstarted}} href="#" data-action="delete_session" data-sessionid="{{sessionid}}">
+                                                {{#str}}delete_session, mod_kuet{{/str}}
+                                            </a>
+                                        </div>
+                                    </div>
+                                {{/managesessions}}
+                            </div>
+                            <div class="d-table-cell initsession">
+                                {{#initsession}}
+                                    <div class="{{#hasactivesession}}disabled{{/hasactivesession}}"
+                                         {{^hasactivesession}}data-action="init_session"{{/hasactivesession}}
+                                         data-sessionid="{{sessionid}}"
+                                    >
+                                        + <span>{{stringsession}}</span>
+                                    </div>
+                                {{/initsession}}
+                                {{#issessionstarted}}
+                                    <div
+                                        {{^hasactivesession}}data-action="init_session"{{/hasactivesession}}
+                                            data-sessionid="{{sessionid}}"
+                                    >
+                                        <a href="{{startedssionurl}}">
+                                            + <span>{{stringsession}}</span>
+                                        </a>
+                                    </div>
+                                {{/issessionstarted}}
+                                {{#noquestions}}
+                                    <span class="icon-warning" data-toggle="tooltip" title="{{#str}}sessionnoquestions, mod_kuet{{/str}}">
+                                        {{#pix}} i/warning, mod_kuet {{/pix}}
+                                    </span>
+                                {{/noquestions}}
+                                {{#sessioncreating}}
+                                    <span class="icon-warning" data-toggle="tooltip" title="{{#str}}sessioncreating, mod_kuet{{/str}}">
+                                        {{#pix}} i/warning, mod_kuet {{/pix}}
+                                    </span>
+                                {{/sessioncreating}}
+                                {{#hasconflict}}
+                                    <span class="icon-warning" data-toggle="tooltip" title="{{#str}}sessionconflict, mod_kuet{{/str}}">
+                                        {{#pix}} i/danger, mod_kuet {{/pix}}
+                                    </span>
+                                {{/hasconflict}}
+                                {{#haswarning}}
+                                    <span class="icon-warning" data-toggle="tooltip" title="{{#str}}sessionwarning, mod_kuet{{/str}}">
+                                        {{#pix}} i/warning, mod_kuet {{/pix}}
+                                    </span>
+                                {{/haswarning}}
+                                {{#haserror}}
+                                    <span class="icon-warning" data-toggle="tooltip" title="{{#str}}sessionerror, mod_kuet{{/str}}">
+                                        {{#pix}} i/warning, mod_kuet {{/pix}}
+                                    </span>
+                                {{/haserror}}
+                            </div>
+                        </div>
+                    {{/activesessions}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 completed-sessions sessions-list">
+            <div class="sessions-list-header bg-primary">
+                <div class="sessions-list-header-title">
+                    {{#pix}} i/sessions_list, mod_kuet {{/pix}}
+                    <h6>{{#str}}completed_sessions, mod_kuet{{/str}}</h6>
+                </div>
+            </div>
+            <div class="content_table">
+                <div class="sessions-list-body d-table">
+                    <div class="d-table-row sessions-list-thead">
+                        <div class="d-table-cell">{{#str}}session_name, mod_kuet{{/str}}</div>
+                        <div class="d-table-cell">{{#str}}sessionmode, mod_kuet{{/str}}</div>
+                        <div class="d-table-cell">{{#str}}timemode, mod_kuet{{/str}}</div>
+                        <div class="d-table-cell text-center">{{#str}}sessiontime, mod_kuet{{/str}}</div>
+                        <div class="d-table-cell text-center">{{#str}}timeperquestion, mod_kuet{{/str}}</div>
+                        <div class="d-table-cell text-center">{{#str}}questions_number, mod_kuet{{/str}}</div>
+                        <div class="d-table-cell text-center">{{#str}}session_date, mod_kuet{{/str}}</div>
+                        <div class="d-table-cell text-center">{{#str}}session_finishingdate, mod_kuet{{/str}}</div>
+                        <div class="d-table-cell text-center">{{#str}}session_actions, mod_kuet{{/str}}</div>
+                        <div class="d-table-cell"></div>
+                    </div>
+                    {{#endedsessions}}
+                        <div class="d-table-row sessions-list-data">
+                            <div class="d-table-cell">{{name}}</div>
+                            <div class="d-table-cell">{{sessionmode}}</div>
+                            <div class="d-table-cell">{{timemode}}</div>
+                            <div class="d-table-cell text-center">{{sessiontime}}</div>
+                            <div class="d-table-cell text-center">{{timeperquestion}}</div>
+                            <div class="d-table-cell text-center">{{questions_number}}</div>
+                            <div class="d-table-cell text-center">{{date}}</div>
+                            <div class="d-table-cell text-center">{{finishingdate}}</div>
+                            <div class="d-table-cell actions">
+                                {{#managesessions}}
+                                    <div class="content-actions">
+                                        <div class="session-action" data-action="copy_session" data-sessionid="{{sessionid}}">
+                                            {{#pix}} i/copy_session, mod_kuet, {{#str}}copy_session, mod_kuet{{/str}} {{/pix}}
+                                        </div>
+                                        <div class="session-action" data-action="delete_session" data-sessionid="{{sessionid}}">
+                                            {{#pix}} i/delete_session, mod_kuet, {{#str}}delete_session, mod_kuet{{/str}} {{/pix}}
+                                        </div>
+                                    </div>
+                                    <div class="dropdown show mobile-content-actions">
+                                        <a class="dropdown-toggle" href="#" role="button" id="actions-{{id}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            {{#pix}}i/three_dots, mod_kuet {{/pix}}
+                                        </a>
+                                        <div class="dropdown-menu" aria-labelledby="actions-{{id}}">
+                                            <a class="dropdown-item" href="#" data-action="copy_session" data-sessionid="{{sessionid}}">
+                                                {{#str}}copy_session, mod_kuet{{/str}}
+                                            </a>
+                                            <a class="dropdown-item" href="#"  data-action="delete_session" data-sessionid="{{sessionid}}">
+                                                {{#str}}delete_session, mod_kuet{{/str}}
+                                            </a>
+                                        </div>
+                                    </div>
+                                {{/managesessions}}
+                            </div>
+                            <div class="d-table-cell viewreport-session">
+                                <a href="{{viewreporturl}}">
+                                    + <span>{{#str}}viewreport_session, mod_kuet{{/str}}</span>
+                                </a>
+                            </div>
+                        </div>
+                    {{/endedsessions}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{#js}}
+    require(['mod_kuet/sessionspanel'],
+        function(SessionsPanel) {
+            SessionsPanel.initSessionsPanel('[data-region="sessions-panel"]');
+        }
+    );
+{{/js}}

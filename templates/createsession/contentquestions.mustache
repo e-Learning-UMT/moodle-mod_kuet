@@ -1,0 +1,92 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+    Project implemented by the "Recovery, Transformation and Resilience Plan.
+    Funded by the European Union - Next GenerationEU".
+    Produced by the UNIMOODLE University Group: Universities of
+    Valladolid, Complutense de Madrid, UPV/EHU, León, Salamanca,
+    Illes Balears, Valencia, Rey Juan Carlos, La Laguna, Zaragoza, Málaga,
+    Córdoba, Extremadura, Vigo, Las Palmas de Gran Canaria y Burgos
+}}
+{{!
+    @template mod_kuet/contentquestions
+
+    Content questions
+
+    Classes required for JS:
+    * None
+
+    Data attibutes required for JS:
+    * None
+
+    Context variables required for this template:
+    * none
+
+    Example context (json):
+    {
+    }
+}}
+<input type="checkbox" name="selectall" id="selectall">
+<label for="selectall">{{#str}}selectall, mod_kuet{{/str}}</label>
+<br>
+<input type="checkbox" name="selectvisibles" id="selectvisibles">
+<label for="selectvisibles">{{#str}}selectvisibles, mod_kuet{{/str}}</label>
+<input type='hidden' id='current_page' />
+<input type='hidden' id='show_per_page' />
+<div id="content_questions">
+    {{#questions}}
+        <div class="question" >
+            <div class="add-question {{^issuitable}}noimage{{/issuitable}}" {{^issuitable}}data-toggle="tooltip" title="{{#str}}question_nosuitable, mod_kuet{{/str}}" {{/issuitable}} {{#issuitable}}data-action="add_question" data-questionnid="{{id}}" data-type="{{qtype}}" {{/issuitable}}>
+                {{#issuitable}}
+                    {{#pix}}i/add, mod_kuet{{/pix}}
+                {{/issuitable}}
+                {{^issuitable}}
+                    {{#pix}}i/warning, core{{/pix}}
+                {{/issuitable}}
+            </div>
+            {{#issuitable}}
+                <input type="checkbox" class="select_question" data-questionnid="{{id}}" data-type="{{qtype}}" data-contextid="{{contextid}}" name="question_{{id}}" />
+            {{/issuitable}}
+            {{#icon}}
+                {{#pix}} {{key}}, {{component}}, {{title}} {{/pix}}
+            {{/icon}}
+            <span class="question-text">{{name}}</span>
+            {{#issuitable}}
+                <a href="{{questionedit}}" target="_blank">
+                    {{#pix}}i/edit, core{{/pix}}
+                </a>
+                <a href="{{questionpreview}}" target="_blank">
+                    {{#pix}}i/loupe, mod_kuet{{/pix}}
+                </a>
+            {{/issuitable}}
+        </div>
+    {{/questions}}
+</div>
+<div id='page_navigation' class="mt-3 d-flex justify-content-center pagination"></div>
+<hr>
+<button class="btn btn-primary" data-action="add_questions">
+    {{#str}}add_questions, mod_kuet{{/str}}
+</button>
+<small>
+    {{#str}}number_select, mod_kuet{{/str}} <span id="number_select">0</span>
+</small>
+{{#js}}
+    require(['mod_kuet/selectquestions'],
+        function(SelectQuestions) {
+            SelectQuestions.initSelectQuestions('[data-region="questions-panel"]');
+        }
+    );
+{{/js}}
